@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Cliente Pessoa Jurídica</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        body {
+            background-image: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            margin: 0; /* Remova as margens padrão do corpo */
+            padding: 0; /* Remova o preenchimento padrão do corpo */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Tamanho da tela inteira */
+        }
+
+        .main-div {
+            background: linear-gradient(to bottom right, #bd34ee, #4d7bff);
+            color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+            position: relative; /* Para posicionamento relativo */
+        }
+
+        .form-control {
+            width: 80%;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .error-message {
+            position: absolute; /* Posicionamento absoluto */
+            top: 100%; /* Coloque a mensagem abaixo do campo */
+            left: 25px; /* Alinhe a mensagem à esquerda */
+            width: 100%; /* A largura deve ser igual à do campo */
+            color: red;
+            font-size: 13px;
+            text-align: left;
+        }
+
+        .btn-primary {
+            background-color: transparent;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            padding: 15px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .btn-voltar {
+            background-color: transparent;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            padding: 15px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-primary:hover {
+            background-color: #ffffff;
+            color: #007bff;
+        }
+
+        .icon {
+            margin-right: 5px;
+        }
+
+        hr {
+            border: none; /* Remove a borda padrão */
+            height: 3px; /* Define a altura */
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364); /* Define o gradiente de fundo */
+            margin-top: 20px; /* Adiciona margem superior */
+            margin-bottom: 25px; /* Adiciona margem inferior */
+        }
+    </style>
+</head>
+<body>
+<div class="main-div">
+    <h2>Cadastro de Cliente Pessoa Jurídica</h2>
+    <hr>
+    <form id="cadastroForm" action="/cliente/pessoa-juridica/salvar" method="post" onsubmit="return validateForm()">
+        <div class="form-group">
+            <input type="text" id="nome" name="nome" class="form-control" placeholder="Nome">
+            <div id="nomeError" class="error-message"></div>
+        </div>
+        <div class="form-group">
+            <input type="text" id="razaoSocial" name="razaoSocial" class="form-control" placeholder="Razão Social">
+            <div id="razaoSocialError" class="error-message"></div>
+        </div>
+        <div class="form-group">
+            <input type="text" id="cnpj" name="cnpj" class="form-control" placeholder="CNPJ" maxlength="18">
+            <div id="cnpjError" class="error-message"></div>
+        </div>
+        <div class="form-group">
+            <input type="text" id="endereco" name="endereco" class="form-control" placeholder="Endereço">
+            <div id="enderecoError" class="error-message"></div>
+        </div>
+        <div class="form-group">
+            <input type="text" id="telefone" name="telefone" class="form-control" placeholder="Telefone">
+            <div id="telefoneError" class="error-message"></div>
+        </div>
+        <button type="submit" class="btn-primary"><i class="fas fa-save icon"></i> Salvar</button>
+        <button type="button" class="btn-voltar" onclick="window.location.href='/principal'"><i class="fas fa-arrow-left icon"></i> Voltar</button>
+    </form>
+</div>
+
+<script>
+    // Função para aplicar a máscara de CNPJ
+    function applyCNPJFormat(value) {
+        return value.replace(/\D/g, '').replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+    }
+
+    // Função para aplicar a máscara de telefone
+    function applyTelefoneFormat(value) {
+        return value.replace(/\D/g, '').replace(/(\d{2})(\d{4,5})(\d{4})/, '($1) $2-$3');
+    }
+
+    // Função para validar o formulário
+    function validateForm() {
+        var nome = document.getElementById('nome').value;
+        var razaoSocial = document.getElementById('razaoSocial').value;
+        var cnpj = document.getElementById('cnpj').value;
+        var endereco = document.getElementById('endereco').value;
+        var telefone = document.getElementById('telefone').value;
+
+        var nomeError = document.getElementById('nomeError');
+        var razaoSocialError = document.getElementById('razaoSocialError');
+        var cnpjError = document.getElementById('cnpjError');
+        var enderecoError = document.getElementById('enderecoError');
+        var telefoneError = document.getElementById('telefoneError');
+
+        // Reset errors
+        nomeError.innerHTML = '';
+        razaoSocialError.innerHTML = '';
+        cnpjError.innerHTML = '';
+        enderecoError.innerHTML = '';
+        telefoneError.innerHTML = '';
+
+        var isValid = true;
+
+        // Validate nome
+        if (nome.trim() === '') {
+            nomeError.innerHTML = 'Por favor, insira o nome.';
+            isValid = false;
+        }
+
+        // Validate razaoSocial
+        if (razaoSocial.trim() === '') {
+            razaoSocialError.innerHTML = 'Por favor, insira a razão social.';
+            isValid = false;
+        }
+
+        // Validate CNPJ
+        if (!cnpj.match(/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/)) {
+            cnpjError.innerHTML = 'Insira um CNPJ válido (formato: XX.XXX.XXX/XXXX-XX).';
+            isValid = false;
+        }
+
+        // Validate endereco
+        if (endereco.trim() === '') {
+            enderecoError.innerHTML = 'Por favor, insira o endereço.';
+            isValid = false;
+        }
+
+        // Validate telefone
+        if (!telefone.match(/^\(\d{2}\) \d{4,5}\-\d{4}$/)) {
+            telefoneError.innerHTML = 'Insira um telefone válido (formato: (XX) XXXXX-XXXX).';
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    // Aplicar máscara de CNPJ ao digitar
+    document.getElementById('cnpj').addEventListener('input', function(e) {
+        var target = e.target;
+        var value = target.value;
+        target.value = applyCNPJFormat(value);
+    });
+
+    // Aplicar máscara de telefone ao digitar
+    document.getElementById('telefone').addEventListener('input', function(e) {
+        var target = e.target;
+        var value = target.value;
+        target.value = applyTelefoneFormat(value);
+    });
+</script>
+
+</body>
+</html>
+

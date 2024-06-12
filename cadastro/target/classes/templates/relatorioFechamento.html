@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Relatório de Fechamento</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .background-gradient {
+            background-image: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            min-height: 100vh;
+            padding: 50px 0;
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .main-div {
+            background: linear-gradient(to bottom right, #bd34ee, #4d7bff);
+            color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            color: #ffffff;
+        }
+
+        th, td {
+            border: 1px solid #ffffff;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            font-weight: bold;
+        }
+
+        .btn {
+            background-color: transparent;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: calc(30% - 10px); /* Metade da largura com espaço entre os botões */
+        }
+
+        .btn:hover {
+            background-color: #ffffff;
+            color: #007bff;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        h2, h3 {
+            margin-bottom: 20px;
+        }
+
+        .margin-top-large {
+            margin-top: 40px; /* Adiciona mais espaço superior */
+        }
+
+        .payments-table th,
+        .payments-table td {
+            width: 50%; /* Define a largura igual para ambas as colunas */
+        }
+    </style>
+</head>
+<body class="background-gradient">
+<div class="main-div">
+    <h2>Relatório de Fechamento</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Serviço</th>
+            <th>Data de Emissão</th>
+            <th>Status</th>
+            <th>Valor</th>
+            <th>Funcionário</th>
+            <th>Forma de Pagamento</th>
+        </tr>
+        <tr th:each="ordem : ${ordensExecutadas}">
+            <td th:text="${ordem.id}"></td>
+            <td th:text="${ordem.cliente.nome}"></td>
+            <td th:text="${ordem.servico.descricao}"></td>
+            <td th:text="${#temporals.format(ordem.dataEmissao, 'dd/MM/yyyy HH:mm')}"></td>
+            <td th:text="${ordem.status}"></td>
+            <td th:text="${ordem.servico.valor}"></td>
+            <td th:text="${ordem.funcionario.nome}"></td>
+            <td th:text="${ordem.formaPagamento}"></td>
+        </tr>
+    </table>
+    <p class="margin-top-large">Bruto Total: R$ <span th:text="${lucroBruto}"></span></p>
+
+    <div>
+        <p>Liquido Total: R$ <span th:text="${lucroEmpresario}"></span></p>
+    </div>
+
+    <h3>Pagamentos a realizar:</h3>
+    <table class="payments-table">
+        <tr>
+            <th>Funcionário</th>
+            <th>Valor a Receber</th>
+        </tr>
+        <tr th:each="entry : ${valorPorFuncionario}">
+            <td th:text="${entry.key}"></td>
+            <td th:text="${entry.value}"></td>
+        </tr>
+    </table>
+
+    <div class="button-container">
+        <a href="/principal" class="btn btn-lg"><i class="fas fa-arrow-left icon"></i> Voltar</a>
+    </div>
+</div>
+</body>
+</html>

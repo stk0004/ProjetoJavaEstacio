@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fechamento de Período</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .background-gradient {
+            background-image: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            height: 100vh; /* Altura da tela inteira */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body {
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-div {
+            background: linear-gradient(to bottom right, #bd34ee, #4d7bff);
+            color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+            width: 50%;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .btn {
+            background-color: transparent;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: calc(50% - 10px); /* Metade da largura com espaço entre os botões */
+        }
+
+        .btn:hover {
+            background-color: #ffffff;
+            color: #007bff;
+        }
+
+        .icon {
+            margin-right: 5px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        hr {
+            border: none; /* Remove a borda padrão */
+            height: 3px; /* Define a altura */
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364); /* Define o gradiente de fundo */
+            margin-top: 20px; /* Adiciona margem superior */
+            margin-bottom: 25px; /* Adiciona margem inferior */
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body class="background-gradient">
+<div class="main-div">
+    <h2>Fechamento de Período</h2>
+    <hr>
+    <form action="/gerarFechamento" method="get">
+        <div class="form-group">
+            <input type="text" onfocus="(this.type='date')" id="dataInicio" name="dataInicio" class="form-control" placeholder="Insira a data inicial" required>
+        </div>
+        <div class="form-group">
+            <input type="text" onfocus="(this.type='date')" id="dataFim" name="dataFim" class="form-control" placeholder="Insira a data final" required>
+        </div>
+        <div class="button-container">
+            <button type="submit" class="btn btn-lg"><i class="fas fa-calendar-check icon"></i> Gerar Fechamento</button>
+            <a href="/principal" class="btn btn-lg"><i class="fas fa-arrow-left icon"></i> Voltar</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

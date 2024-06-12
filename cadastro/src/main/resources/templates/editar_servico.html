@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Serviço</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-image: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .main-div {
+            background: linear-gradient(to bottom right, #bd34ee, #4d7bff);
+            color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control, .form-control-select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .btn-primary {
+            background-color: transparent;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .btn-primary:hover {
+            background-color: #ffffff;
+            color: #007bff;
+        }
+
+        .btn-voltar {
+            background-color: transparent;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-voltar:hover {
+            background-color: #ffffff;
+            color: #007bff;
+        }
+
+        .icon {
+            margin-right: 5px;
+        }
+
+        hr {
+            border: none;
+            height: 3px;
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            margin-top: 20px;
+            margin-bottom: 25px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="main-div">
+    <h2>Editar Serviço</h2>
+    <hr>
+    <form action="/servico/atualizar" method="post" id="formServico">
+        <input type="hidden" name="id" th:value="${servico.id}" />
+        <div class="form-group">
+            <select id="tipo" name="tipo" class="form-control form-control-select">
+                <option value="" disabled hidden>Tipo de Serviço</option>
+                <option value="Cabelo" th:selected="${servico.tipo == 'Cabelo'}">Cabelo</option>
+                <option value="Manicure" th:selected="${servico.tipo == 'Manicure'}">Manicure</option>
+                <option value="Depilação" th:selected="${servico.tipo == 'Depilação'}">Depilação</option>
+            </select>
+        </div>
+        <div id="divTamanhoCabelo" class="form-group" th:style="'display:' + (${servico.tipo} == 'Cabelo' ? 'block' : 'none')">
+            <select id="tamanhoCabelo" name="tamanhoCabelo" class="form-control form-control-select">
+                <option value="" disabled hidden>Tamanho do Cabelo</option>
+                <option value="Curto" th:selected="${servico.tamanhoCabelo == 'Curto'}">Curto</option>
+                <option value="Médio" th:selected="${servico.tamanhoCabelo == 'Médio'}">Médio</option>
+                <option value="Longo" th:selected="${servico.tamanhoCabelo == 'Longo'}">Longo</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <input type="text" id="descricao" name="descricao" class="form-control" th:value="${servico.descricao}" placeholder="Descrição">
+        </div>
+        <div class="form-group">
+            <input type="text" id="valor" name="valor" class="form-control" th:value="${servico.valor}" placeholder="Valor">
+        </div>
+        <button type="submit" class="btn-primary"><i class="fas fa-save icon"></i> Atualizar</button>
+        <button type="button" class="btn-voltar" onclick="window.location.href='/servicos'"><i class="fas fa-arrow-left icon"></i> Voltar</button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var tipoServico = document.getElementById('tipo').value;
+        var divTamanhoCabelo = document.getElementById('divTamanhoCabelo');
+        if (tipoServico === 'Cabelo') {
+            divTamanhoCabelo.style.display = 'block';
+        } else {
+            divTamanhoCabelo.style.display = 'none';
+        }
+    });
+
+    document.getElementById('tipo').addEventListener('change', function() {
+        var tipoServico = this.value;
+        var divTamanhoCabelo = document.getElementById('divTamanhoCabelo');
+        if (tipoServico === 'Cabelo') {
+            divTamanhoCabelo.style.display = 'block';
+        } else {
+            divTamanhoCabelo.style.display = 'none';
+        }
+    });
+</script>
+</body>
+</html>

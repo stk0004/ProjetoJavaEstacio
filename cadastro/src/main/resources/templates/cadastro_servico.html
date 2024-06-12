@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Serviço</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        body {
+            background-image: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .main-div {
+            background: linear-gradient(to bottom right, #bd34ee, #4d7bff);
+            color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-control, .form-control-select {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .btn-primary {
+            background-color: transparent;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            padding: 15px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .btn-primary:hover {
+            background-color: #ffffff;
+            color: #007bff;
+        }
+
+        .btn-voltar {
+            background-color: transparent;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            padding: 15px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-voltar:hover {
+            background-color: #ffffff;
+            color: #007bff;
+        }
+
+        .icon {
+            margin-right: 5px;
+        }
+
+        hr {
+            border: none;
+            height: 3px;
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            margin-top: 20px;
+            margin-bottom: 25px;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 13px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<div class="main-div">
+    <h2>Cadastro de Serviço</h2>
+    <hr>
+    <form action="/servico/salvar" method="post" id="formServico" onsubmit="return validateForm()">
+        <div class="form-group">
+            <select id="tipo" name="tipo" class="form-control form-control-select">
+                <option value="" disabled selected hidden>Tipo de Serviço</option>
+                <option value="Cabelo">Cabelo</option>
+                <option value="Manicure">Manicure</option>
+                <option value="Depilação">Depilação</option>
+            </select>
+            <div id="tipoError" class="error-message"></div>
+        </div>
+        <div id="divTamanhoCabelo" class="form-group" style="display: none;">
+            <select id="tamanhoCabelo" name="tamanhoCabelo" class="form-control form-control-select">
+                <option value="" disabled selected hidden>Tamanho do Cabelo</option>
+                <option value="Curto">Curto</option>
+                <option value="Médio">Médio</option>
+                <option value="Longo">Longo</option>
+            </select>
+            <div id="tamanhoCabeloError" class="error-message"></div>
+        </div>
+        <div class="form-group">
+            <input type="text" id="descricao" name="descricao" class="form-control" placeholder="Descrição">
+            <div id="descricaoError" class="error-message"></div>
+        </div>
+        <div class="form-group">
+            <input type="text" id="valor" name="valor" class="form-control" placeholder="Valor">
+            <div id="valorError" class="error-message"></div>
+        </div>
+        <button type="submit" class="btn-primary"><i class="fas fa-save icon"></i> Salvar</button>
+        <button type="button" class="btn-voltar" onclick="window.location.href='/principal'"><i class="fas fa-arrow-left icon"></i> Voltar</button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var tipoSelect = document.getElementById('tipo');
+        var divTamanhoCabelo = document.getElementById('divTamanhoCabelo');
+
+        tipoSelect.addEventListener('change', function() {
+            var tipoServico = this.value;
+            if (tipoServico === 'Cabelo') {
+                divTamanhoCabelo.style.display = 'block';
+            } else {
+                divTamanhoCabelo.style.display = 'none';
+            }
+        });
+
+        function validateForm() {
+            var tipoServico = document.getElementById('tipo').value;
+            var descricao = document.getElementById('descricao').value;
+            var valor = document.getElementById('valor').value;
+            var tamanhoCabelo = document.getElementById('tamanhoCabelo').value;
+
+            var tipoError = document.getElementById('tipoError');
+            var descricaoError = document.getElementById('descricaoError');
+            var valorError = document.getElementById('valorError');
+            var tamanhoCabeloError = document.getElementById('tamanhoCabeloError');
+
+            // Reset errors
+            tipoError.innerHTML = '';
+            descricaoError.innerHTML = '';
+            valorError.innerHTML = '';
+            tamanhoCabeloError.innerHTML = '';
+
+            var isValid = true;
+
+            // Validate tipoServico
+            if (tipoServico === '') {
+                tipoError.innerHTML = 'Por favor, selecione um tipo de serviço.';
+                isValid = false;
+            }
+
+            // Validate descricao
+            if (descricao.trim() === '') {
+                descricaoError.innerHTML = 'Por favor, insira uma descrição.';
+                isValid = false;
+            }
+
+            // Validate valor
+            if (valor.trim() === '') {
+                valorError.innerHTML = 'Por favor, insira um valor.';
+                isValid = false;
+            } else if (isNaN(valor)) {
+                valorError.innerHTML = 'O valor deve ser numérico.';
+                isValid = false;
+            }
+
+            // Validate tamanhoCabelo
+            if (tipoServico === 'Cabelo' && tamanhoCabelo === '') {
+                tamanhoCabeloError.innerHTML = 'Por favor, selecione um tamanho de cabelo.';
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        var formServico = document.getElementById('formServico');
+        formServico.addEventListener('submit', function(event) {
+            if (!validateForm()) {
+                event.preventDefault();
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>
+

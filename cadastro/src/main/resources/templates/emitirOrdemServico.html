@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Emitir Ordem de Serviço</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .background-gradient {
+            background-image: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+        }
+
+        body {
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-div {
+            background: linear-gradient(to bottom right, #bd34ee, #4d7bff);
+            color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+            width: 55%;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        .table-container {
+            background: linear-gradient(to bottom right, #bd34ee, #4d7bff);
+            color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            margin: 50px auto;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .btn-primary {
+            background-color: transparent;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: calc(100% / 2);
+        }
+
+        .btn-primary:hover {
+            background-color: #ffffff;
+            color: #007bff;
+        }
+
+
+        .icon {
+            margin-right: 5px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        hr {
+            border: none; /* Remove a borda padrão */
+            height: 3px; /* Define a altura */
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364); /* Define o gradiente de fundo */
+            margin-top: 20px; /* Adiciona margem superior */
+            margin-bottom: 25px; /* Adiciona margem inferior */
+        }
+
+        table {
+            width: 85%;
+            border-collapse: collapse;
+            margin-top: 5px; /* Adiciona margem superior */
+            font-size: 14px;
+        }
+
+        th, td {
+            border: 1px solid #ffffff;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: #ffffff;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .table-container {
+            background: linear-gradient(to bottom right, #bd34ee, #4d7bff);
+            color: #ffffff;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+            width: 95%; /*
+            margin: 50px auto;
+        }
+
+        .table-container th, .table-container td {
+            border: 1px solid #ffffff;
+            padding: 8px;
+            text-align: left;
+            white-space: pre-wrap;
+        }
+
+        .table-container th {
+            background-color: #bd34ee;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .table-container table {
+            margin: 0 auto;
+        }
+
+        .descricao-container {
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+            height: 100px;
+        }
+
+       .button-container .btn-primary {
+           width: 200px; /* Defina o tamanho desejado */
+       }
+
+       .btn-danger {
+           background-color: transparent;
+           color: #ffffff;
+           border: 2px solid #ffffff;
+           padding: 10px 20px;
+           border-radius: 4px;
+           cursor: pointer;
+           margin-top: 20px;
+           width: 150px; /* Defina o tamanho desejado */
+           height: 55px;
+       }
+
+       .btn-danger:hover {
+          background-color: #ffffff;
+          color: #dc3545;
+       }
+
+       .btn-executar:hover {
+
+        background-color: #ffffff;
+           color: #32CD32;
+           border-color: #32CD32;
+       }
+
+       .btn-executar {
+          width: 170px;
+          height: 52px;
+       }
+
+
+       .small-font {
+          font-size: 14px; /* Altere este valor conforme necessário */
+       }
+       .text-center {
+          text-align: center;
+       }
+
+       .custom-select {
+          width: 270px; /* Defina o tamanho desejado */
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          font-size: 14px;
+          height: 40px;
+       }
+
+
+        .btn-home {
+    background-color: transparent;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 150px;
+    height: 55px;
+}
+
+.btn-home:hover {
+    background-color: #ffffff;
+    color: #007bff;
+    border-color: #007bff; /* Define a cor da borda ao passar o mouse */
+}
+
+
+
+
+    </style>
+
+</head>
+<body class="background-gradient">
+<div class="main-div">
+    <h2>Nova Ordem de Serviço</h2>
+    <hr>
+    <form action="#" th:action="@{/emitirOrdemServico}" th:object="${ordemServico}" method="post">
+        <div class="form-group">
+            <select class="form-control" th:field="*{cliente}">
+                <option value="">Selecione o Cliente</option>
+                <option th:each="cliente : ${clientes}" th:value="${cliente.id}" th:text="${cliente.nome}"></option>
+            </select>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <select class="form-control" id="tipoServico">
+                    <option value="">Selecione o tipo de serviço</option>
+                    <option th:each="tipoServico : ${tiposServicos}" th:value="${tipoServico}" th:text="${tipoServico}"></option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <select class="form-control" id="descricao" th:field="*{servico}">
+                    <option value="">Selecione qual será o serviço</option>
+                    <option th:each="servico : ${servicos}" th:value="${servico.id}" th:text="${servico.descricao}" th:attr="data-valor=${servico.valor}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <input type="text" id="valor" class="form-control" placeholder="Valor" readonly />
+            </div>
+            <div class="form-group col-md-6">
+                <select class="form-control" id="funcionario" th:field="*{funcionario}">
+                    <option value="">Selecione o Funcionário</option>
+                </select>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-save icon"></i> Emitir Ordem de Serviço</button>
+    </form>
+</div>
+
+<div class="table-container">
+    <h2>Ordens de Serviço</h2>
+    <hr>
+    <form id="deleteForm" th:action="@{/deleteOrdemServico}" method="post">
+        <table>
+            <tr>
+                <th>Selecionar</th>
+                <th>Cliente</th>
+                <th>Servico</th>
+                <div class="descricao-container">
+                    <th>Descrição</th>
+                </div>
+                <th>Valor</th>
+                <th>Funcionario</th>
+                <th>Data de Emissao</th>
+                <th>Status</th>
+                <th>Forma de Pagamento</th>
+                <th>Ação</th>
+            </tr>
+            <tr th:each="ordemServico : ${ordensServico}">
+                <td><input type="checkbox" name="selectedIds" th:value="${ordemServico.id}" th:checked="${ordemServico.ordemPadrao}" /></td>
+                <td th:text="${ordemServico.cliente != null ? ordemServico.cliente.nome : 'Adicione um Cliente'}"></td>
+                <td th:text="${ordemServico.servico != null ? ordemServico.servico.tipo : 'Escolha o tipo do Serviço'}"></td>
+                <td th:text="${ordemServico.servico != null ? ordemServico.servico.descricao : 'Escolha o Serviço'}"></td>
+                <td th:text="${ordemServico.servico != null ? ordemServico.servico.valor : 'Valor do Serviço'}"></td>
+                <td th:text="${ordemServico.funcionario != null ? ordemServico.funcionario.nome : 'Escolha o Funcionario'}"></td>
+                <td th:text="${#dates.format(ordemServico.dataEmissaoAsDate, 'dd/MM/yyyy HH:mm')}"></td>
+                <td th:text="${ordemServico.status != null ? ordemServico.status : 'Status atual'}"></td>
+                <td th:text="${ordemServico.formaPagamento != null ? ordemServico.formaPagamento : 'Seleciona a forma de pagamento'}"></td>
+                <td class="text-center">
+                    <form th:action="@{/executarOrdemServico/{id}(id=${ordemServico.id})}" method="post">
+                        <select name="formaPagamento" class="custom-select">
+                            <option value="">Selecione a forma de pagamento</option>
+                            <option value="Cartão de Crédito">Cartão de Crédito</option>
+                            <option value="Débito">Débito</option>
+                            <option value="Dinheiro">Dinheiro</option>
+                            <option value="PIX">PIX</option>
+                        </select>
+
+                        <div class="button-container">
+                            <button type="submit" class="btn btn-danger btn-lg btn-executar"><i class="fas fa-play-circle icon"></i> Executar</button>
+
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        </table>
+        <div class="button-container">
+            <button type="submit" class="btn btn-danger btn-lg"><i class="fas fa-trash-alt"></i> Excluir</button>
+            <a href="/principal" class="btn btn-danger btn-lg btn-home"><i class="fas fa-home"></i> Home</a>
+
+        </div>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script th:inline="javascript">
+    function carregarDescricoes(tipoServico) {
+        var descricaoSelect = document.getElementById('descricao');
+        var url = '/buscarDescricoesPorTipo?tipo=' + tipoServico;
+
+        // Limpar as opções existentes
+        descricaoSelect.innerHTML = '';
+
+        // Adicionar a opção padrão
+        var optionDefault = document.createElement('option');
+        optionDefault.value = '';
+        optionDefault.text = 'Selecione a descrição do serviço';
+        descricaoSelect.appendChild(optionDefault);
+
+        // Fazer uma chamada AJAX para buscar as descrições dos serviços
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Descrições recebidas:', data); // Log para ver os dados recebidos
+
+                // Criar um conjunto para armazenar IDs únicas de descrições
+                var descricaoSet = new Set();
+
+                data.forEach(descricao => {
+                    // Verificar se a ID da descrição já existe no conjunto
+                    if (!descricaoSet.has(descricao.id)) {
+                        // Adicionar a ID ao conjunto para evitar duplicatas
+                        descricaoSet.add(descricao.id);
+
+                        // Criar a opção para a descrição do serviço
+                        var option = document.createElement('option');
+                        option.value = descricao.id;
+                        option.text = descricao.descricao;
+                        option.setAttribute('data-valor', descricao.valor);
+
+                        // Adicionar a opção ao dropdown de descrição do serviço
+                        descricaoSelect.appendChild(option);
+                    } else {
+                        console.log('Descrição duplicada ignorada:', descricao); // Log para descrições duplicadas
+                    }
+                });
+
+                console.log('Descrições após filtro:', Array.from(descricaoSet)); // Log para ver o conjunto final de IDs
+            })
+            .catch(error => console.error('Erro ao buscar descrições:', error));
+    }
+
+    document.getElementById('tipoServico').addEventListener('change', function() {
+        var tipoServico = this.value;
+        carregarDescricoes(tipoServico);
+
+        // Limpar o valor atual do campo de valor
+        document.getElementById('valor').value = '';
+    });
+
+    document.getElementById('descricao').addEventListener('change', function() {
+        var selectedOption = this.options[this.selectedIndex];
+        var valor = selectedOption.getAttribute('data-valor');
+
+        // Atualizar o valor no campo de valor
+        document.getElementById('valor').value = valor;
+    });
+
+    document.getElementById('tipoServico').addEventListener('change', function() {
+        var tipoServico = this.value;
+        carregarFuncionarios(tipoServico);
+
+        // Limpar o valor atual do campo de valor e funcionário
+        document.getElementById('valor').value = '';
+        document.getElementById('funcionario').innerHTML = '<option value="">Selecione o Funcionário</option>';
+    });
+
+    function carregarFuncionarios(tipoServico) {
+        var funcionarioSelect = document.getElementById('funcionario');
+        var url = '/buscarFuncionariosPorTipo?tipoServico=' + tipoServico;
+
+        // Limpar as opções existentes
+        funcionarioSelect.innerHTML = '<option value="">Selecione o Funcionário</option>';
+
+        // Fazer uma chamada AJAX para buscar os funcionários por tipo de serviço
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(funcionario => {
+                    // Criar a opção para o funcionário
+                    var option = document.createElement('option');
+                    option.value = funcionario.id;
+                    option.text = funcionario.nome;
+
+                    // Adicionar a opção ao dropdown de funcionário
+                    funcionarioSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Erro ao buscar funcionários:', error));
+    }
+
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Serviços</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .background-gradient {
+            background-image: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            min-height: 100vh;
+            padding: 50px 0;
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main-div {
+            background: linear-gradient(to bottom right, #bd34ee, #4d7bff);
+            color: #ffffff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 70%;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            color: #ffffff;
+        }
+
+        th, td {
+            border: 1px solid #ffffff;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            font-weight: bold;
+        }
+
+        .descricao {
+            width: 300px;
+            white-space: pre-wrap;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        .btn {
+            background-color: transparent;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: calc(40% - 10px);
+        }
+
+        .btn:hover {
+            background-color: #ffffff;
+            color: #007bff;
+        }
+
+        .btn-edit, .btn-delete {
+            background-color: transparent;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .btn-edit:hover, .btn-delete:hover {
+            background-color: #ffffff;
+            color: #007bff;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+        }
+
+        td:last-child {
+            text-align: center;
+        }
+
+        hr {
+            border: none;
+            height: 3px;
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            margin-top: 20px;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+<body class="background-gradient">
+<div class="main-div">
+    <h2>Lista de Serviços Registrados</h2>
+    <hr>
+    <table>
+        <thead>
+        <tr>
+            <th>Tipo de Serviço</th>
+            <th>Descrição</th>
+            <th>Tamanho do Cabelo</th>
+            <th>Valor</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="servico : ${servicos}" th:id="'row-' + ${servico.id}">
+            <td th:text="${servico.tipo}"></td>
+            <td class="descricao" th:text="${servico.descricao}"></td>
+            <td th:text="${servico.tipo == 'Cabelo' ? servico.tamanhoCabelo : '-'}"></td>
+            <td th:text="${servico.valor}"></td>
+            <td>
+                <div class="action-buttons">
+                    <button class="btn-edit" th:onclick="|window.location.href='/servico/editar/' + ${servico.id}|">
+                        <i class="fas fa-edit"></i> Editar
+                    </button>
+
+
+                    <button class="btn-delete" th:onclick="deleteServico([[${servico.id}]])" type="button">
+                        <i class="fas fa-trash-alt"></i> Excluir
+                    </button>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+    <div class="button-container">
+        <a href="/principal" class="btn"><i class="fas fa-arrow-left"></i> Voltar para a página principal</a>
+    </div>
+</div>
+<script>
+    function deleteServico(id) {
+        if (confirm('Você tem certeza que deseja excluir este serviço?')) {
+            fetch(`/servico/excluir/${id}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById("row-" + id).remove();
+                } else {
+                    alert('Erro ao excluir o serviço');
+                }
+            });
+        }
+    }
+</script>
+</body>
+</html>
